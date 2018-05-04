@@ -38,5 +38,32 @@ var CountDown = require('CountDown');
               done();
           },2001);
         });
+
+        it('should pause the countdown when status is set to paused', (done) => {
+          var countDown = TestUtils.renderIntoDocument(<CountDown/>);
+          countDown.setTimeToCountDown(3);
+          countDown.handleStatusChange('paused');
+
+          setTimeout(() => {
+              expect(countDown.state.inputTime).toNotBe(2);
+              expect(countDown.state.inputTime).toBe(3);
+              expect(countDown.state.countDownStatus).toBe('paused');
+              done();
+          },1001);
+        });
+
+        it('should set the countdown to zero when status is set to stopped', (done) => {
+          var countDown = TestUtils.renderIntoDocument(<CountDown/>);
+          countDown.setTimeToCountDown(3);
+          countDown.handleStatusChange('stopped');
+
+          setTimeout(() => {
+              expect(countDown.state.inputTime).toNotBe(2);
+              expect(countDown.state.inputTime).toBe(0);
+              expect(countDown.state.countDownStatus).toBe('stopped');
+              done();
+          },1001);
+        });
       });
+
   });
